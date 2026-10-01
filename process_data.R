@@ -68,7 +68,7 @@ regulations_calc <- regulations_data |>
   mutate(
     location_name = case_when(
       regulation_type == "airport" ~ ap_name,
-      location_code == "EDYY" ~ "MUAC",
-      .default = location_code
+      # location_code == "EDYY" ~ "MUAC",
+      .default = aua_name
     )
   )
