@@ -13,3 +13,17 @@ export_query <- function(query, schema = "PRU_READ") {
     collect() |>
     janitor::clean_names()
 }
+
+save_json <- function(
+  myfile,
+  table_name,
+  prod_folder = app_tables_folder
+) {
+  # myfile <- dim_ap
+  # table_name <- "dim_ap"
+  # prod_folder <- app_tables_folder
+
+  json_table <- myfile |> toJSON(pretty = TRUE)
+
+  write(json_table, here(prod_folder, paste0(table_name, ".json")))
+}

@@ -12,8 +12,18 @@ ct_data_file <- 'countries.json'
 sp_data_file <- 'ansp.json'
 reg_data_file <- 'regulations.json'
 
+app_production_folder <- '//ihx-vdm05/LIVE_var_www_performance$/briefing/data'
+app_tables_folder <- here(app_production_folder, "support_tables")
+
+
 # dimensions ----
 source("dimensions.R")
+
+# save dimensions to production ----
+save_json(dim_ap, "dim_ap")
+save_json(list_ap, "list_ap_app")
+save_json(rel_aua_acc, "rel_aua_acc")
+save_json(rel_acc_ansp, 'rel_acc_ansp')
 
 # ingest data ----
 network_data <- fromJSON(here(data_folder, nw_data_file)) |>
@@ -68,7 +78,12 @@ regulations_calc <- regulations_data |>
   mutate(
     location_name = case_when(
       regulation_type == "airport" ~ ap_name,
-      # location_code == "EDYY" ~ "MUAC",
       .default = aua_name
     )
+  ) |>
+  select(
+    -cause,
+    -reference_location
   )
+
+# regulations_calc |> filter(location_code == "EGPH")
