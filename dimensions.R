@@ -75,3 +75,16 @@ rel_acc_ansp <- ansp_list |>
     acc_icao_code
   ) |>
   unique()
+
+# AO, AO Group ----
+list_ao_grp_rel_ao <- export_query(
+  'SELECT * FROM pruread.v_aiu_app_list_ao_grp'
+) |>
+  filter(
+    til >= lubridate::today()
+  ) |>
+  select(
+    ao_grp_code,
+    ao_code
+  ) |>
+  arrange(ao_grp_code, ao_code)

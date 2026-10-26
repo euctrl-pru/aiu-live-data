@@ -24,6 +24,7 @@ save_json(dim_ap, "dim_ap")
 save_json(list_ap, "list_ap_app")
 save_json(rel_aua_acc, "rel_aua_acc")
 save_json(rel_acc_ansp, 'rel_acc_ansp')
+save_json(list_ao_grp_rel_ao, 'list_ao_grp_rel_ao')
 
 # ingest data ----
 network_data <- fromJSON(here(data_folder, nw_data_file)) |>
@@ -87,3 +88,13 @@ regulations_calc <- regulations_data |>
   )
 
 # regulations_calc |> filter(location_code == "EGPH")
+
+## airlines ----
+airlines_data_calc <- airlines_data |>
+  right_join(list_ao_grp_rel_ao, by = c("aircraft_operator" = "ao_code")) |>
+  group_by(ao_grp_code) |>
+  summarise(across(
+    -c(operational_date, aircraft_operator),
+    ~ sum(.x, na.rm = TRUE)
+  )) |>
+  ungroup()
