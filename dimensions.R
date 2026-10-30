@@ -88,3 +88,11 @@ list_ao_grp_rel_ao <- export_query(
     ao_code
   ) |>
   arrange(ao_grp_code, ao_code)
+
+# State ----
+rel_iso_icao_country <- readxl::read_xlsx(
+  here("..", "mobile-app", "stakeholder_lists.xlsx"),
+  sheet = "state_lists",
+  range = readxl::cell_limits(c(2, 24), c(NA, 26))
+) %>%
+  as_tibble()

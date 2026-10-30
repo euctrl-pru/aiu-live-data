@@ -25,6 +25,7 @@ save_json(list_ap, "list_ap_app")
 save_json(rel_aua_acc, "rel_aua_acc")
 save_json(rel_acc_ansp, 'rel_acc_ansp')
 save_json(list_ao_grp_rel_ao, 'list_ao_grp_rel_ao')
+save_json(rel_iso_icao_country, 'rel_iso_icao_country')
 
 # ingest data ----
 network_data <- fromJSON(here(data_folder, nw_data_file)) |>
@@ -86,6 +87,32 @@ regulations_calc <- regulations_data |>
     -cause,
     -reference_location
   )
+
+regulations_calc_ansp <- regulations_calc |>
+  left_join(
+    rel_acc_ansp,
+    by = c("location_code" = "acc_icao_code")
+  )
+
+regulations_calc_state <- regulations_calc |>
+  mutate(
+    location_2letter_code = if_else(
+      location_code == 'EDYY',
+      "MUAC",
+      substr(location_code, 1, 2)
+    ),
+    location_2letter_code = if_else(
+      location_2letter_code == 'ET',
+      "ED",
+      location_2letter_code
+    )
+  ) |>
+  left_join(
+    rel_iso_icao_country,
+    by = c("location_2letter_code" = "icao_code"),
+    relationship = "many-to-many"
+  )
+
 
 # regulations_calc |> filter(location_code == "EGPH")
 
