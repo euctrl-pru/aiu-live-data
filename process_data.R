@@ -94,6 +94,7 @@ regulations_calc_ansp <- regulations_calc |>
     by = c("location_code" = "acc_icao_code")
   )
 
+## country ----
 regulations_calc_state <- regulations_calc |>
   mutate(
     location_2letter_code = if_else(
