@@ -24,7 +24,7 @@ save_json(dim_ap, "dim_ap")
 save_json(list_ap, "list_ap_app")
 save_json(rel_aua_acc, "rel_aua_acc")
 save_json(rel_acc_ansp, 'rel_acc_ansp')
-save_json(rel_ansp_app_json, 'rel_ansp_app_json')
+save_json(rel_ansp_app, 'rel_ansp_app')
 save_json(list_ao_grp_rel_ao, 'list_ao_grp_rel_ao')
 save_json(rel_iso_icao_country, 'rel_iso_icao_country')
 

@@ -76,7 +76,7 @@ rel_acc_ansp <- ansp_list |>
   ) |>
   unique()
 
-rel_ansp_app_json <- ansp_list |>
+rel_ansp_app <- ansp_list |>
   select(ansp_code, json_ansp_id)
 
 # AO, AO Group ----
